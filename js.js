@@ -48,9 +48,9 @@
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const lang = urlParams.get('lang')
-    if (lang) {
-        fill(lang)
+    const LANG = urlParams.get('lang')
+    if (LANG) {
+        fill(LANG)
     }
 
     const copyToClipBoard = (str) => {
