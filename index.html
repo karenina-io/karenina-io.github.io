@@ -33,171 +33,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <meta charset="UTF-8">
 
-<style>
-    /*.cor {*/
-    /*    text-decoration: underline solid red;*/
-    /*    !*text-decoration-thickness: 5px;*!*/
-    /*    cursor: pointer;*/
-    /*}*/
-
-    .old {
-        cursor: pointer;
-        background-color: pink;
-        text-decoration: red line-through;
-    }
-
-    .new {
-        cursor: pointer;
-        background-color: lightgreen;
-        text-decoration: green underline double;
-    }
-
-    /*mark {*/
-    /*    !*background-color: lightgreen;*!*/
-    /*    !*text-decoration-thickness: 5px;*!*/
-    /*    cursor: pointer;*/
-    /*    margin-bottom: 5px;*/
-    /*    margin-top: 5px;*/
-    /*    !*text-decoration: underline double;*!*/
-
-    /*    background-color: lightgreen;*/
-    /*    text-decoration: green underline double;*/
-
-    /*    !*padding-bottom: -3px;*!*/
-    /*    !*padding-top: -3px;*!*/
-    /*    !*border-bottom-width: medium;*!*/
-    /*    !*color: black;*!*/
-    /*}*/
-
-    /*del {*/
-    /*    cursor: pointer;*/
-    /*    background-color: pink;*/
-    /*}*/
-
-    /*mark.old {*/
-    /*    background-color: pink;*/
-    /*    text-decoration: red underline double;*/
-    /*    !*border-bottom: 3px red solid;*!*/
-    /*}*/
-
-    /*mark.maybe {*/
-    /*    background-color: yellow;*/
-    /*    text-decoration: orange underline double;*/
-    /*    !*border-bottom: 3px orange solid;*!*/
-
-    /*}*/
-
-    /*mark.new {*/
-    /*    background-color: lightgreen;*/
-    /*    text-decoration: green underline double;*/
-    /*    */
-    /*    !*border-bottom: green 3px solid;*!*/
-    /*}*/
-</style>
-
-<!--    <title>Karenina IO multilingual grammar and style checker</title>-->
-
-<div class="container" id="app">
-
-    <div class="row">
-        <div class="col">
-            <!--            <h5>Input</h5>-->
-
-            <!--                he need buy aple and cereal for lunch. he will be their in 5 minuts to make shopping in store-->
-            <h6>Sample inputs (*denotes experimental) </h6>
-            <button class="btn btn-outline-danger" onclick="fill('en')">English</button>
-            <button class="btn btn-outline-danger" onclick="fill('es')">Spanish</button>
-            <button class="btn btn-outline-danger" onclick="fill('pt')">Portuguese</button>
-            <button class="btn btn-outline-danger" onclick="fill('zh')">Chinese</button>
-            <button class="btn btn-outline-danger" onclick="fill('ar')">Arabic*</button>
-            <button class="btn btn-outline-danger" onclick="fill('ja')">Japanese*</button>
-            <button class="btn btn-outline-danger" onclick="fill('ko')">Korean*</button>
-            <button class="btn btn-outline-danger" onclick="fill('fr')">French*</button>
-            <button class="btn btn-outline-danger" onclick="fill('de')">German*</button>
-            <button class="btn btn-outline-danger" onclick="fill('it')">Italian*</button>
-
-            <br>
-            <br>
-            <h6>Update: Registration email error fixed!</h6>
-            <div contenteditable="true" id="text" spellcheck="false"
-                 style="border: thin solid black;padding: 3px;margin: 3px"></div>
-            <!--            <div id="verify">-->
-            <!--                <span id="verify-prompt"></span>-->
-            <!--                <input type="number">-->
-            <!--            </div>-->
-            <!--            <input type="checkbox" id="replace"/><span>Auto replace with corrections</span><br>-->
-            <button class="btn btn-success" id="analyze" onclick="analyze()">Analyze</button>
-            <a class="btn btn-success" href="/acct">Register</a>
-            <button class="btn btn-primary" id="copy" onclick="copy()">Copy</button>
-            <!--            <button class="btn btn-primary" id="paste" onclick="paste()">Paste</button>-->
-            <button class="btn btn-danger" onclick="clearInput()">Clear</button>
-            <br>
-            <br>
-            <!--            <h6>AI grammar & style correction for English, Spanish, French, German, Italian, Chinese, Japanese, and-->
-            <!--                more!</h6>-->
-            <!--            <h6 id="free"><em>Free user restrictions: input length limited, daily queries limited</em></h6>-->
-            <!--Short sentences may be misinterpreted to             be in another language.-->
-            <!--            Upgrade to premium for uninterrupted use! By using our website you consent to our common sense-->
-            <h6><a href="https://gist.github.com/karenina-io/83c690270ef41299c9ac95ee9903c2b4">Terms of use</a></h6>
-            <div class="fb-share-button" data-href="https://karenina.io" data-layout="box_count"
-                 data-size="large"><a target="_blank"
-                                      href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fkarenina.io%2F&amp;src=sdkpreparse"
-                                      class="fb-xfbml-parse-ignore">Share</a></div>
-            <a class="twitter-share-button"
-               href="https://twitter.com/intent/tweet"
-               data-size="large">
-                Tweet</a>
-
-            <!--            <div class="fb-share-button" data-href="https://karenina.io" data-layout="box_count" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fkarenina.io%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>-->
-
-
-            <!--            <div id="keys">-->
-            <!--                <h5>Karenina IO Chrome extension hotkeys </h5>-->
-            <!--                <h6>Alt+C: On any webpage copies selected text onto karenina.io and performs correction </h6>-->
-            <!--                <h6>Alt+V: On karenina.io pastes the edited text back into the original webpage </h6>-->
-            <!--            </div>-->
-            <!--            <button class="btn btn-success" id="write" onclick="write()">Write</button>-->
-        </div>
-    </div>
-    <!--        <div class="col">-->
-
-    <!--            <h5>Output</h5>-->
-    <!--            <p id="output"></p>-->
-    <!--        </div>-->
-    <!--    <div class="row">-->
-    <!--        <div class="col">-->
-    <!--            <h5>Sample inputs</h5>-->
-    <!--            <button class="btn btn-outline-danger" onclick="fill(this)">he need buy aple and cereal. he will arrive-->
-    <!--                there in 5 minutesss to make shopping in store-->
-    <!--            </button>-->
-    <!--            &lt;!&ndash;            <button class="btn btn-outline-danger" onclick="fill(this)">he need buy aple and cereal for lunch. he will be their in 5 minuts to make shopping in store</button>&ndash;&gt;-->
-    <!--            <br>-->
-
-    <!--            <button class="btn btn-outline-danger" onclick="fill(this)">我的中国文是很坏</button>-->
-    <!--            <br>-->
-    <!--&lt;!&ndash;            <button class="btn btn-outline-danger" onclick="fill(this)">我的中国文是很坏</button>&ndash;&gt;-->
-    <!--&lt;!&ndash;            <br>&ndash;&gt;-->
-
-    <!--            <button class="btn btn-outline-danger" onclick="fill(this)">me no gustar comer los pizza por almerzo-->
-    <!--            </button>-->
-    <!--            <br>-->
-
-    <!--            <button class="btn btn-outline-danger" onclick="fill(this)">je aimer joue video jeux</button>-->
-    <!--            <br>-->
-    <!--            <br>-->
-
-
-    <!--        </div>-->
-    <!--    </div>-->
-    <div class="row">
-        <div class="col-3" id="ents">
-        </div>
-        <div class="col-9" id="docs">
-        </div>
-    </div>
-</div>
-<!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
-
 <script>
     const MAX_LEN = 150
     const MAX_DAILY = 10;
@@ -459,18 +294,9 @@
 
         if (localStorage.getItem('customer')) {
             $('#free').hide()
-            // $('#keys').show()
-            // $('#text').attr('maxlength', 150)
-            // $('#verify').show()
-            // let x = Math.floor(Math.random())
-            // let y = Math.floor(Math.random())
-            // window.sum = x + y
-            // $('#verify-prompt').html(`Prove you're only human :) ${x} + ${y} = `)
         } else {
             $('#free').show()
-            // $('#keys').hide()
-            // $('#text').attr('maxlength', 150000000)
-            // $('#verify').hide()
+
 
         }
         $('#analyze').text('Analyze')
@@ -478,22 +304,130 @@
 
     refresh()
 
-    //     }
-    // })
-
-    // chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
-    //
-    //     switch (msg.action) {
-    //         case "correct":
-    //             $('#text').text(msg.q)
-    //             analyze()
-    //             sendResponse({})
-    //             break
-    //
-    //     }
-    // });
 
 </script>
+
+<style>
+
+    .old {
+        cursor: pointer;
+        background-color: pink;
+        text-decoration: red line-through;
+    }
+
+    .new {
+        cursor: pointer;
+        background-color: lightgreen;
+        text-decoration: green underline double;
+    }
+
+</style>
+
+<!--    <title>Karenina IO multilingual grammar and style checker</title>-->
+
+<!--#include virtual="/nav" -->
+<div class="container" id="app">
+
+    <div class="row">
+        <div class="col">
+            <!--            <h5>Input</h5>-->
+
+            <!--                he need buy aple and cereal for lunch. he will be their in 5 minuts to make shopping in store-->
+            <h6>Sample inputs (*denotes experimental) </h6>
+            <button class="btn btn-outline-danger" onclick="fill('en')">English</button>
+            <button class="btn btn-outline-danger" onclick="fill('es')">Spanish</button>
+            <button class="btn btn-outline-danger" onclick="fill('pt')">Portuguese</button>
+            <button class="btn btn-outline-danger" onclick="fill('zh')">Chinese</button>
+            <button class="btn btn-outline-danger" onclick="fill('ar')">Arabic*</button>
+            <button class="btn btn-outline-danger" onclick="fill('ja')">Japanese*</button>
+            <button class="btn btn-outline-danger" onclick="fill('ko')">Korean*</button>
+            <button class="btn btn-outline-danger" onclick="fill('fr')">French*</button>
+            <button class="btn btn-outline-danger" onclick="fill('de')">German*</button>
+            <button class="btn btn-outline-danger" onclick="fill('it')">Italian*</button>
+
+            <br>
+            <br>
+            <h6>Update: Registration email error fixed!</h6>
+            <div contenteditable="true" id="text" spellcheck="false"
+                 style="border: thin solid black;padding: 3px;margin: 3px"></div>
+            <!--            <div id="verify">-->
+            <!--                <span id="verify-prompt"></span>-->
+            <!--                <input type="number">-->
+            <!--            </div>-->
+            <!--            <input type="checkbox" id="replace"/><span>Auto replace with corrections</span><br>-->
+            <button class="btn btn-success" id="analyze" onclick="analyze()">Analyze</button>
+            <a class="btn btn-success" href="/acct">Register</a>
+            <button class="btn btn-primary" id="copy" onclick="copy()">Copy</button>
+            <!--            <button class="btn btn-primary" id="paste" onclick="paste()">Paste</button>-->
+            <button class="btn btn-danger" onclick="clearInput()">Clear</button>
+            <br>
+            <br>
+            <!--            <h6>AI grammar & style correction for English, Spanish, French, German, Italian, Chinese, Japanese, and-->
+            <!--                more!</h6>-->
+            <!--            <h6 id="free"><em>Free user restrictions: input length limited, daily queries limited</em></h6>-->
+            <!--Short sentences may be misinterpreted to             be in another language.-->
+            <!--            Upgrade to premium for uninterrupted use! By using our website you consent to our common sense-->
+            <h6><a href="https://gist.github.com/karenina-io/83c690270ef41299c9ac95ee9903c2b4">Terms of use</a></h6>
+            <div class="fb-share-button" data-href="https://karenina.io" data-layout="box_count"
+                 data-size="large"><a target="_blank"
+                                      href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fkarenina.io%2F&amp;src=sdkpreparse"
+                                      class="fb-xfbml-parse-ignore">Share</a></div>
+            <a class="twitter-share-button"
+               href="https://twitter.com/intent/tweet"
+               data-size="large">
+                Tweet</a>
+
+            <!--            <div class="fb-share-button" data-href="https://karenina.io" data-layout="box_count" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fkarenina.io%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>-->
+
+
+            <!--            <div id="keys">-->
+            <!--                <h5>Karenina IO Chrome extension hotkeys </h5>-->
+            <!--                <h6>Alt+C: On any webpage copies selected text onto karenina.io and performs correction </h6>-->
+            <!--                <h6>Alt+V: On karenina.io pastes the edited text back into the original webpage </h6>-->
+            <!--            </div>-->
+            <!--            <button class="btn btn-success" id="write" onclick="write()">Write</button>-->
+        </div>
+    </div>
+    <!--        <div class="col">-->
+
+    <!--            <h5>Output</h5>-->
+    <!--            <p id="output"></p>-->
+    <!--        </div>-->
+    <!--    <div class="row">-->
+    <!--        <div class="col">-->
+    <!--            <h5>Sample inputs</h5>-->
+    <!--            <button class="btn btn-outline-danger" onclick="fill(this)">he need buy aple and cereal. he will arrive-->
+    <!--                there in 5 minutesss to make shopping in store-->
+    <!--            </button>-->
+    <!--            &lt;!&ndash;            <button class="btn btn-outline-danger" onclick="fill(this)">he need buy aple and cereal for lunch. he will be their in 5 minuts to make shopping in store</button>&ndash;&gt;-->
+    <!--            <br>-->
+
+    <!--            <button class="btn btn-outline-danger" onclick="fill(this)">我的中国文是很坏</button>-->
+    <!--            <br>-->
+    <!--&lt;!&ndash;            <button class="btn btn-outline-danger" onclick="fill(this)">我的中国文是很坏</button>&ndash;&gt;-->
+    <!--&lt;!&ndash;            <br>&ndash;&gt;-->
+
+    <!--            <button class="btn btn-outline-danger" onclick="fill(this)">me no gustar comer los pizza por almerzo-->
+    <!--            </button>-->
+    <!--            <br>-->
+
+    <!--            <button class="btn btn-outline-danger" onclick="fill(this)">je aimer joue video jeux</button>-->
+    <!--            <br>-->
+    <!--            <br>-->
+
+
+    <!--        </div>-->
+    <!--    </div>-->
+    <div class="row">
+        <div class="col-3" id="ents">
+        </div>
+        <div class="col-9" id="docs">
+        </div>
+    </div>
+</div>
+<!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+
+
 
 <!--Disclaimer-->
 <!--* This software/document/website is offered “as-is”, without warranty, and disclaiming liability for damages resulting from its/their use.-->
