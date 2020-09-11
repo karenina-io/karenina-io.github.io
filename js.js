@@ -213,22 +213,14 @@ function refresh() {
 }
 
 for (lang in SAMPLES) {
-    console.log(lang)
 
-    function fill_() {
-
-        fill(lang)
-    }
-
-    document.getElementById(lang).addEventListener("click", fill_, false);
+    tmp="\""+lang+"\""
+    eval(`document.getElementById(${tmp}).addEventListener("click", ()=>fill(${tmp}), false)`);
 }
-
-myurl = 'https://us-central1-project-318531836785902414.cloudfunctions.net/acct'
-//const myurl="https://us-central1-dauntless-loop-285816.cloudfunctions.net/correct"
 
 function query(data, callback) {
 
-    return fetch(myurl, {
+    return fetch('https://us-central1-project-318531836785902414.cloudfunctions.net/acct', {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         headers: {
             'Accept': 'application/json',
