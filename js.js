@@ -69,13 +69,6 @@
         copyToClipBoard(document.getElementById('text').innerText)
     }
 
-    // function paste() {
-    //     let tArea = document.getElementById('text')
-    //     tArea.innerText = '';
-    //     tArea.focus();
-    //     tArea.select();
-    //     document.execCommand('paste');
-    // }
 
     function write() {
         chrome.tabs.sendMessage(window.id, {
@@ -218,7 +211,7 @@
         $('#analyze').text('Analyze')
     }
 
-for(lang in Object.keys(SAMPLES)){
+for(lang in SAMPLES){
 document.getElementById(lang).addEventListener ("click", ()=>fill(lang), false);
 }
     refresh()

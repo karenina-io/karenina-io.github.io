@@ -1,0 +1,248 @@
+<object data="/nav.html">
+    Your browser doesn’t support the object tag.
+</object>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<meta charset="UTF-8">
+
+<!--    <title>Karenina IO multilingual grammar and style checker</title>-->
+
+<div class="container" id="app">
+    <div class="row">
+        <div class="col">
+            <div id="login">
+                <h6>For more free daily usage, register by entering your email and choosing a password. If you’re registered,
+                    login with your credentials. </h6>
+                <br>
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                           placeholder="Enter email">
+                    <!--                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+                </div>
+                <div class="form-group">
+                    <label for="pw">Password</label>
+                    <input type="password" class="form-control" id="pw" placeholder="Password">
+                </div>
+                <!--                <form>-->
+                <!--                    <div class="form-group">-->
+                <!--                <label for="email">Email</label><br>-->
+                <!--                <br>-->
+                <!--                <h6>Email</h6>-->
+                <!--                <input type="email" id="email">-->
+                <!--                <br>-->
+                <!--                <br>-->
+                <!--                &lt;!&ndash;                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>&ndash;&gt;-->
+                <!--                &lt;!&ndash;                    </div>&ndash;&gt;-->
+                <!--                &lt;!&ndash;                    <div class="form-group">&ndash;&gt;-->
+                <!--&lt;!&ndash;                <label for="pw">Password</label>&ndash;&gt;-->
+                <!--&lt;!&ndash;                <br>&ndash;&gt;-->
+                <!--&lt;!&ndash;                <br>&ndash;&gt;-->
+                <!--                <h6>Password</h6>-->
+                <!--                <input type="password" id="pw">-->
+                <!--                <br>-->
+                <!--                <br>-->
+                <!--                    </div>-->
+                <!--                <div class="form-check">-->
+                <!--                    <input type="checkbox" class="form-check-input" id="exampleCheck1">-->
+                <!--                    <label class="form-check-label" for="exampleCheck1">Check me out</label>-->
+                <!--                </div>-->
+                <!--                <button type="submit" class="btn btn-primary">Submit</button>-->
+                <button class="btn btn-success" onclick="login()">Login / Register</button>
+                <!--            <button class="btn btn-success" id="write" onclick="write()">Write</button>-->
+            </div>
+            <div id="acct">
+                <div id="info">
+
+                </div>
+                <br>
+                <!--                <form>-->
+                <!--                    <div class="form-group">-->
+                <h6>Registered users have more free daily usage :) If that's not enough, upgrade for uninterrupted use!</h6>
+                <p>
+                    We'll use your free daily quota first each time before touching your plan's character credits :)
+                    Cancel anytime.
+                </p>
+                <!--                    All plans start with 7 days free trial of 5000 character credits for new users.-->
+                <!--                    Cancel within 7 days to pay nothing.-->
+                <!--                <h6>-->
+                <!--                    Plans-->
+                <!--                </h6>-->
+                <!--                <p>-->
+                <!--                    All plans -->
+                <!--                </p>-->
+                <input type="radio" name="plan" value=0>$5/month (25000 characters for occasional use)<br>
+                <input type="radio" name="plan" value=1>$15/month (90000 characters for everyday use)<br>
+                <!--                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+                <button class="btn btn-success" onclick="pay()">Upgrade</button>
+                <br><br>
+                <p>Cancel anytime! You can still use your remaining credits. If you run out of
+                    credits, just subscribe again.
+                    Your new plan will replace any previous plan and your remaining credits
+                    will get transferred over.</p>
+                <!--                    </div>-->
+                <button class="btn btn-outline btn-danger" onclick="logout()">Logout</button>
+                <br>
+                <br>
+                <button class="btn btn-outline  btn-danger" onclick="cancel()">Cancel plan</button>
+
+                <!--                <div class="form-check">-->
+                <!--                    <input type="checkbox" class="form-check-input" id="exampleCheck1">-->
+                <!--                    <label class="form-check-label" for="exampleCheck1">Check me out</label>-->
+                <!--                </div>-->
+                <!--                <button type="submit" class="btn btn-primary">Submit</button>-->
+                <!--                </form>-->
+
+
+            </div>
+        </div>
+        <!--        <div class="col">-->
+
+        <!--            <h5>Output</h5>-->
+        <!--            <p id="output"></p>-->
+        <!--        </div>-->
+    </div>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+
+<script>
+    const TEST = false
+    var stripe = Stripe('pk_live_5VIOfPyZY0OroJwkjAagM76Z00LBZwAz1f');
+    // var stripe = Stripe('pk_test_jcU9iD1IwrgZmgZAsv7qbX3900y57OLCtH');
+    var url_string = window.location.href
+    var url = new URL(url_string);
+    var session_id = url.searchParams.get("session_id");
+
+    if (session_id) {
+    }
+
+
+    function pay() {
+
+        let data = {
+            customer: localStorage.getItem('customer'),
+            action: 'pay',
+            plan: Number($('input[name=\'plan\']:checked').val()),
+            // 'q': q.trim(),
+        }
+
+        query(data, r => {
+            let {id} = r
+            stripe.redirectToCheckout({
+                // Make the id field from the Checkout Session creation API response
+                // available to this file, so you can provide it as parameter here
+                // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
+                sessionId: id
+            }).then(function (result) {
+                // If `redirectToCheckout` fails due to a browser or network
+                // error, display the localized error message to your customer
+                // using `result.error.message`.
+            });
+
+        })
+    }
+
+    function validateEmail(email) {
+        const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
+
+    function login() {
+        let email = $('#email').val()
+        if (validateEmail(email)) {
+            let data = {
+                email: email,
+                pw: $('#pw').val(),
+                action: 'login'
+            }
+            query(data, r => {
+                let {status} = r
+                if(TEST) {
+                    alert(r.msg)
+                }
+                switch (status) {
+                    case 'success':
+                        if (TEST) {
+                            alert(r.customer)
+                        }
+                        localStorage.setItem("customer", r.customer);
+                        refresh()
+                        break
+                    case 'error':
+                        break
+                }
+
+            })
+        } else {
+            alert(`Invalid email`)
+        }
+    }
+
+    function cancel() {
+
+        let data = {
+            customer: localStorage.getItem('customer'),
+            action: 'cancel'
+        }
+        query(data, r => {
+            alert(r.msg)
+            refresh()
+        })
+    }
+
+    function logout() {
+        localStorage.removeItem('customer')
+        refresh()
+    }
+
+    function info() {
+        query({
+            customer: localStorage.getItem('customer'),
+            action: 'info'
+        }, r => {
+            // for (k of Object.keys(r)){
+            //     localStorage.setItem(k,r[k])
+            // }
+            $('#info').html(`
+            <h6>Email: ${r.email}</h6>
+            <h6>Characters remaining: ${r.chars}</h6>
+            <h6>Current subscription period ends: ${r.end}</h6>
+            <h6>Subscription active: ${r.active}</h6>
+            `)
+        })
+    }
+
+    function refresh() {
+        let customer = localStorage.getItem('customer');
+        if (TEST) {
+            alert('refresh')
+            alert(customer)
+        }
+        if (customer) {
+
+            $('#login').hide()
+            $('#acct').show()
+            info()
+        } else {
+            $('#login').show()
+            $('#acct').hide()
+        }
+    }
+
+    refresh()
+</script>
+
+<object data="/footer.html">
+    Your browser doesn’t support the object tag.
+</object>

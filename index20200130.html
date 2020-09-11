@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+</head>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col" id="app-contenteditable">
+
+            <div class="form-group">
+                <!--                    <label for="exampleFormControlTextarea1">Example textarea</label>-->
+                <textarea id="in" class="form-control" rows="6">had belly ache after eating out. now having chills and blood in my poop</textarea>
+            </div>
+
+            <div id="out">
+                <!--        {{out}}-->
+            </div>
+            t
+            <div id="wait"></div>
+            <!--            <button class="btn btn-danger" @click="reset">Reset</button>-->
+        </div>
+    </div>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<script>
+    const contentEditable = new Vue({
+        el: '#app-contenteditable',
+        data() {
+            return {
+                fullContent: '',
+                listening: [],
+                warningIndex: 0,
+                highlights: [],
+                stopWritingTimer: 0,
+                writingTimer: '',
+                mockResponse: {
+                    request: "i has cats in home",
+                    fix: "i <del>has</del><b>have</b> cats in <del>home</del><b>the house</b>",
+                    cleanFix: "i have cats in the house",
+                    corrections: [
+                        {
+                            "start": 2,
+                            "old": "has",
+                            "new": "have"
+                        },
+                        {
+                            "start": 14,
+                            "old": "home",
+                            "new": "the house"
+                        }
+                    ],
+                    possibilities: [["have", 649], ["had", 204], ["heard", 46], ["hope", 39], ["hear", 22], ["hardly", 7], ["hate", 7], ["he", 7], ["haven", 7], ["held", 5]]
+                },
+                completions: [],
+                generateOffset: 0,
+                out: '',
+            }
+        },
+        methods: {
+            async analyze() {
+                $('#btn').toggle()
+                document.getElementById('wait').innerText = 'Processing...'
+                let params = {
+                    'text':$('#in').val(),
+                }
+
+
+                console.log(`checking ${params}`)
+                const response = await fetch(`http://34.82.155.8:8000`, {
+                    method: 'POST',
+                    header: {
+                        "Accept": 'application/json',
+                        "Content-Type": 'application/json'
+                    },
+                    // body: `${encodeURI(text)}`
+                    body: JSON.stringify(params)
+                })
+                const data = await response.json()
+
+                let r = `<h4><em>Deep learning model trained on inpatient data, meaning severity of morbidity is much greater than that encountered in an outpatient clinic setting.
+Also, we only trained on 10% of dataset for this demo.
+Thus, substantial room for improvement.
+</em></h4>
+<h4>Details for patient to elaborate on</h4>`
+                for (k in data.snips.details) {
+                    r += `<b>${k}</b><br>`
+                    for (v of data.snips.details[k]) {
+                        r += `<input type="checkbox"><input type="text" size="80" value="${v[0]}"><br>`
+                    }
+                }
+
+                r += `<h4>Pertinent Sx, Dx, PMH to query patient or recommend to provider</h4>`
+                for (k in data.snips.more) {
+                    if (!['treatment', 'test', 'procedure'].includes(k)) {
+                        r += `<b>${k}</b><br>`
+                        for (v of data.snips.more[k]) {
+                            r += `<input type="checkbox"><input type="text" size="80" value="${v[0]}"><br>`
+                        }
+                    }
+                }
+                document.getElementById('wait').innerText = ''
+                document.getElementById('out').innerHTML = r
+            }
+        }
+    })
+</script>
+
+</html>
