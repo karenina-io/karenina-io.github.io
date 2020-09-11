@@ -80,8 +80,7 @@ function correct() {
 
     let q = document.getElementById('text').innerText
     console.log(q)
-    let url = 'https://us-central1-project-318531836785902414.cloudfunctions.net/f'
-    // let url = 'https://us-central1-project-318531836785902414.cloudfunctions.net/correct'
+    let url = 'https://us-central1-dauntless-loop-285816.cloudfunctions.net/correct'
 
     let data = {
         'q': q.trim(),
