@@ -212,7 +212,25 @@
     }
 
 for(lang in SAMPLES){
-document.getElementById(lang).addEventListener ("click", ()=>fill(lang), false);
+console.log(lang)
+document.getElementById(lang).addEventListener("click", ()=>fill(lang), false);
 }
+
+     myurl = 'https://us-central1-project-318531836785902414.cloudfunctions.net/acct'
+	//const myurl="https://us-central1-dauntless-loop-285816.cloudfunctions.net/correct"
+
+    function query(data, callback) {
+
+        return fetch(myurl, {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            headers: {
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify(data) // body data type must match "Content-Type" header
+        }).then(r => r.json()).then(r => {
+            return callback(r)
+        })
+    }
+
     refresh()
 
