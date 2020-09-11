@@ -1,6 +1,5 @@
-<object data="/nav.html">
-    Your browser doesn’t support the object tag.
-</object>
+<div id="nav"><</div>
+
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -243,6 +242,11 @@
     refresh()
 </script>
 
-<object data="/footer.html">
-    Your browser doesn’t support the object tag.
-</object>
+<div id="footer"></div>
+
+<script type="text/javascript">
+$(document).ready(function(e) {
+    $('#nav').load('/nav.html');
+    $('#footer').load('/footer.html');
+});
+</script>

@@ -1,4 +1,59 @@
 <div id="fb-root"></div>
+<div id="nav"><</div>
+<div class="container" id="app">
+
+    <div class="row">
+        <div class="col">
+            <!--            <h5>Input</h5>-->
+
+            <!--                he need buy aple and cereal for lunch. he will be their in 5 minuts to make shopping in store-->
+            <h6>Sample inputs (*denotes experimental) </h6>
+            <button class="btn btn-outline-danger" id='en'>English</button>
+            <button class="btn btn-outline-danger" id='es'>Spanish</button>
+            <button class="btn btn-outline-danger" id='pt'>Portuguese</button>
+            <button class="btn btn-outline-danger" id='zh'>Chinese</button>
+            <button class="btn btn-outline-danger" id='ar'>Arabic*</button>
+            <button class="btn btn-outline-danger" id='ja'>Japanese*</button>
+            <button class="btn btn-outline-danger" id='ko'>Korean*</button>
+            <button class="btn btn-outline-danger" id='fr'>French*</button>
+            <button class="btn btn-outline-danger" id='de'>German*</button>
+            <button class="btn btn-outline-danger" id='it'>Italian*</button>
+
+            <br>
+            <br>
+            <h6>Update: Registration email error fixed!</h6>
+            <div contenteditable="true" id="text" spellcheck="false"
+                 style="border: thin solid black;padding: 3px;margin: 3px"></div>
+            <button class="btn btn-success" id="analyze" onclick="analyze()">Analyze</button>
+            <a class="btn btn-success" href="/acct">Register</a>
+            <button class="btn btn-primary" id="copy" onclick="copy()">Copy</button>
+            <!--            <button class="btn btn-primary" id="paste" onclick="paste()">Paste</button>-->
+            <button class="btn btn-danger" onclick="clearInput()">Clear</button>
+            <br>
+            <br>
+            <h6><a href="https://gist.github.com/karenina-io/83c690270ef41299c9ac95ee9903c2b4">Terms of use</a></h6>
+            <div class="fb-share-button" data-href="https://karenina.io" data-layout="box_count"
+                 data-size="large"><a target="_blank"
+                                      href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fkarenina.io%2F&amp;src=sdkpreparse"
+                                      class="fb-xfbml-parse-ignore">Share</a></div>
+            <a class="twitter-share-button"
+               href="https://twitter.com/intent/tweet"
+               data-size="large">
+                Tweet</a>
+
+        </div>
+    </div>
+
+</div>
+<div id="footer"></div>
+
+<script type="text/javascript">
+$(document).ready(function(e) {
+    $('#nav').load('/nav.html');
+    $('#footer').load('/footer.html');
+});
+
+</script>
 
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v7.0"
         nonce="HMvCBx1d"></script>
@@ -19,7 +74,8 @@
     };
 
     return t;
-}(document, "script", "twitter-wjs"));</script>
+}(document, "script", "twitter-wjs"));
+</script>
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -50,82 +106,5 @@
         text-decoration: green underline double;
     }
 
+
 </style>
-
-<!--    <title>Karenina IO multilingual grammar and style checker</title>-->
-<object data="/nav.html">
-    Your browser doesn’t support the object tag.
-</object>
-<div class="container" id="app">
-
-    <div class="row">
-        <div class="col">
-            <!--            <h5>Input</h5>-->
-
-            <!--                he need buy aple and cereal for lunch. he will be their in 5 minuts to make shopping in store-->
-            <h6>Sample inputs (*denotes experimental) </h6>
-            <button class="btn btn-outline-danger" id='en'>English</button>
-            <button class="btn btn-outline-danger" id='es'>Spanish</button>
-            <button class="btn btn-outline-danger" id='pt'>Portuguese</button>
-            <button class="btn btn-outline-danger" id='zh'>Chinese</button>
-            <button class="btn btn-outline-danger" id='ar'>Arabic*</button>
-            <button class="btn btn-outline-danger" id='ja'>Japanese*</button>
-            <button class="btn btn-outline-danger" id='ko'>Korean*</button>
-            <button class="btn btn-outline-danger" id='fr'>French*</button>
-            <button class="btn btn-outline-danger" id='de'>German*</button>
-            <button class="btn btn-outline-danger" id='it'>Italian*</button>
-
-            <br>
-            <br>
-            <h6>Update: Registration email error fixed!</h6>
-            <div contenteditable="true" id="text" spellcheck="false"
-                 style="border: thin solid black;padding: 3px;margin: 3px"></div>
-            <!--            <div id="verify">-->
-            <!--                <span id="verify-prompt"></span>-->
-            <!--                <input type="number">-->
-            <!--            </div>-->
-            <!--            <input type="checkbox" id="replace"/><span>Auto replace with corrections</span><br>-->
-            <button class="btn btn-success" id="analyze" onclick="analyze()">Analyze</button>
-            <a class="btn btn-success" href="/acct">Register</a>
-            <button class="btn btn-primary" id="copy" onclick="copy()">Copy</button>
-            <!--            <button class="btn btn-primary" id="paste" onclick="paste()">Paste</button>-->
-            <button class="btn btn-danger" onclick="clearInput()">Clear</button>
-            <br>
-            <br>
-            <!--            <h6>AI grammar & style correction for English, Spanish, French, German, Italian, Chinese, Japanese, and-->
-            <!--                more!</h6>-->
-            <!--            <h6 id="free"><em>Free user restrictions: input length limited, daily queries limited</em></h6>-->
-            <!--Short sentences may be misinterpreted to             be in another language.-->
-            <!--            Upgrade to premium for uninterrupted use! By using our website you consent to our common sense-->
-            <h6><a href="https://gist.github.com/karenina-io/83c690270ef41299c9ac95ee9903c2b4">Terms of use</a></h6>
-            <div class="fb-share-button" data-href="https://karenina.io" data-layout="box_count"
-                 data-size="large"><a target="_blank"
-                                      href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fkarenina.io%2F&amp;src=sdkpreparse"
-                                      class="fb-xfbml-parse-ignore">Share</a></div>
-            <a class="twitter-share-button"
-               href="https://twitter.com/intent/tweet"
-               data-size="large">
-                Tweet</a>
-
-            <!--            <div class="fb-share-button" data-href="https://karenina.io" data-layout="box_count" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fkarenina.io%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>-->
-
-
-            <!--            <div id="keys">-->
-            <!--                <h5>Karenina IO Chrome extension hotkeys </h5>-->
-            <!--                <h6>Alt+C: On any webpage copies selected text onto karenina.io and performs correction </h6>-->
-            <!--                <h6>Alt+V: On karenina.io pastes the edited text back into the original webpage </h6>-->
-            <!--            </div>-->
-            <!--            <button class="btn btn-success" id="write" onclick="write()">Write</button>-->
-        </div>
-    </div>
-
-</div>
-<object data="/footer.html">
-    Your browser doesn’t support the object tag.
-</object>
-<!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
-
-
-
-<!--Disclaimer-->
-<!--* This software/document/website is offered “as-is”, without warranty, and disclaiming liability for damages resulting from its/their use.-->
