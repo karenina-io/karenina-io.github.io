@@ -280,7 +280,7 @@ const TEST = false
         return re.test(email);
     }
 
-    function login() {
+    function loginreg() {
         let email = $('#email').val()
         if (validateEmail(email)) {
             let data = {
