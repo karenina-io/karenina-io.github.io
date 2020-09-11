@@ -1,3 +1,17 @@
+function query(data, callback) {
+
+    return fetch('https://us-central1-project-318531836785902414.cloudfunctions.net/acct', {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        headers: {
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify(data) // body data type must match "Content-Type" header
+    }).then(r => r.json()).then(r => {
+        return callback(r)
+    })
+}
+
+if(document.getElementById("text")){
 const MAX_LEN = 150
 const MAX_DAILY = 10;
 const MAX_DAILY0 = 14;
@@ -213,25 +227,14 @@ function refresh() {
 
 
 
-function query(data, callback) {
 
-    return fetch('https://us-central1-project-318531836785902414.cloudfunctions.net/acct', {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        headers: {
-            'Accept': 'application/json',
-        },
-        body: JSON.stringify(data) // body data type must match "Content-Type" header
-    }).then(r => r.json()).then(r => {
-        return callback(r)
-    })
-}
 
 
 for (lang in SAMPLES) {
     tmp="\""+lang+"\""
     eval(`document.getElementById(${tmp}).addEventListener("click", ()=>fill(${tmp}), false)`);
 }
-
+}else{
 //
 //
 //
@@ -365,3 +368,4 @@ for (x of ['loginreg','cancel','pay','logout']) {
     eval(`document.getElementById(${tmp}).addEventListener("click", ()=>${x}(), false)`);
 }
 refresh()
+}
