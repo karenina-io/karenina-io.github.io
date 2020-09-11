@@ -33,32 +33,8 @@
                     <label for="pw">Password</label>
                     <input type="password" class="form-control" id="pw" placeholder="Password">
                 </div>
-                <!--                <form>-->
-                <!--                    <div class="form-group">-->
-                <!--                <label for="email">Email</label><br>-->
-                <!--                <br>-->
-                <!--                <h6>Email</h6>-->
-                <!--                <input type="email" id="email">-->
-                <!--                <br>-->
-                <!--                <br>-->
-                <!--                &lt;!&ndash;                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>&ndash;&gt;-->
-                <!--                &lt;!&ndash;                    </div>&ndash;&gt;-->
-                <!--                &lt;!&ndash;                    <div class="form-group">&ndash;&gt;-->
-                <!--&lt;!&ndash;                <label for="pw">Password</label>&ndash;&gt;-->
-                <!--&lt;!&ndash;                <br>&ndash;&gt;-->
-                <!--&lt;!&ndash;                <br>&ndash;&gt;-->
-                <!--                <h6>Password</h6>-->
-                <!--                <input type="password" id="pw">-->
-                <!--                <br>-->
-                <!--                <br>-->
-                <!--                    </div>-->
-                <!--                <div class="form-check">-->
-                <!--                    <input type="checkbox" class="form-check-input" id="exampleCheck1">-->
-                <!--                    <label class="form-check-label" for="exampleCheck1">Check me out</label>-->
-                <!--                </div>-->
-                <!--                <button type="submit" class="btn btn-primary">Submit</button>-->
-                <button class="btn btn-success" onclick="login()">Login / Register</button>
-                <!--            <button class="btn btn-success" id="write" onclick="write()">Write</button>-->
+
+                <button class="btn btn-success" id="loginreg">Login / Register</button>
             </div>
             <div id="acct">
                 <div id="info">
@@ -72,44 +48,26 @@
                     We'll use your free daily quota first each time before touching your plan's character credits :)
                     Cancel anytime.
                 </p>
-                <!--                    All plans start with 7 days free trial of 5000 character credits for new users.-->
-                <!--                    Cancel within 7 days to pay nothing.-->
-                <!--                <h6>-->
-                <!--                    Plans-->
-                <!--                </h6>-->
-                <!--                <p>-->
-                <!--                    All plans -->
-                <!--                </p>-->
+
                 <input type="radio" name="plan" value=0>$5/month (25000 characters for occasional use)<br>
                 <input type="radio" name="plan" value=1>$15/month (90000 characters for everyday use)<br>
                 <!--                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
-                <button class="btn btn-success" onclick="pay()">Upgrade</button>
+                <button class="btn btn-success" id="pay">Upgrade</button>
                 <br><br>
                 <p>Cancel anytime! You can still use your remaining credits. If you run out of
                     credits, just subscribe again.
                     Your new plan will replace any previous plan and your remaining credits
                     will get transferred over.</p>
                 <!--                    </div>-->
-                <button class="btn btn-outline btn-danger" onclick="logout()">Logout</button>
+                <button class="btn btn-outline btn-danger" id="logout">Logout</button>
                 <br>
                 <br>
-                <button class="btn btn-outline  btn-danger" onclick="cancel()">Cancel plan</button>
+                <button class="btn btn-outline  btn-danger" id="cancel">Cancel plan</button>
 
-                <!--                <div class="form-check">-->
-                <!--                    <input type="checkbox" class="form-check-input" id="exampleCheck1">-->
-                <!--                    <label class="form-check-label" for="exampleCheck1">Check me out</label>-->
-                <!--                </div>-->
-                <!--                <button type="submit" class="btn btn-primary">Submit</button>-->
-                <!--                </form>-->
 
 
             </div>
         </div>
-        <!--        <div class="col">-->
-
-        <!--            <h5>Output</h5>-->
-        <!--            <p id="output"></p>-->
-        <!--        </div>-->
     </div>
 </div>
 
@@ -250,5 +208,10 @@ $(document).ready(function(e) {
         }
     }
 
+for (x of ['loginreg','cancel','pay','logout']) {
+
+    tmp="\""+x+"\""
+    eval(`document.getElementById(${tmp}).addEventListener("click", ()=>${x}(), false)`);
+}
     refresh()
 </script>
