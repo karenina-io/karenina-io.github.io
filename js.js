@@ -232,4 +232,137 @@ for (lang in SAMPLES) {
     tmp="\""+lang+"\""
     eval(`document.getElementById(${tmp}).addEventListener("click", ()=>fill(${tmp}), false)`);
 }
+
+//
+//
+//
+
+const TEST = false
+    var stripe = Stripe('pk_live_5VIOfPyZY0OroJwkjAagM76Z00LBZwAz1f');
+    // var stripe = Stripe('pk_test_jcU9iD1IwrgZmgZAsv7qbX3900y57OLCtH');
+    var url_string = window.location.href
+    var url = new URL(url_string);
+    var session_id = url.searchParams.get("session_id");
+
+    if (session_id) {
+    }
+
+
+    function pay() {
+
+        let data = {
+            customer: localStorage.getItem('customer'),
+            action: 'pay',
+            plan: Number($('input[name=\'plan\']:checked').val()),
+            // 'q': q.trim(),
+        }
+
+        query(data, r => {
+            let {id} = r
+            stripe.redirectToCheckout({
+                // Make the id field from the Checkout Session creation API response
+                // available to this file, so you can provide it as parameter here
+                // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
+                sessionId: id
+            }).then(function (result) {
+                // If `redirectToCheckout` fails due to a browser or network
+                // error, display the localized error message to your customer
+                // using `result.error.message`.
+            });
+
+        })
+    }
+
+    function validateEmail(email) {
+        const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
+
+    function login() {
+        let email = $('#email').val()
+        if (validateEmail(email)) {
+            let data = {
+                email: email,
+                pw: $('#pw').val(),
+                action: 'login'
+            }
+            query(data, r => {
+                let {status} = r
+                if(TEST) {
+                    alert(r.msg)
+                }
+                switch (status) {
+                    case 'success':
+                        if (TEST) {
+                            alert(r.customer)
+                        }
+                        localStorage.setItem("customer", r.customer);
+                        refresh()
+                        break
+                    case 'error':
+                        break
+                }
+
+            })
+        } else {
+            alert(`Invalid email`)
+        }
+    }
+
+    function cancel() {
+
+        let data = {
+            customer: localStorage.getItem('customer'),
+            action: 'cancel'
+        }
+        query(data, r => {
+            alert(r.msg)
+            refresh()
+        })
+    }
+
+    function logout() {
+        localStorage.removeItem('customer')
+        refresh()
+    }
+
+    function info() {
+        query({
+            customer: localStorage.getItem('customer'),
+            action: 'info'
+        }, r => {
+            // for (k of Object.keys(r)){
+            //     localStorage.setItem(k,r[k])
+            // }
+            $('#info').html(`
+            <h6>Email: ${r.email}</h6>
+            <h6>Characters remaining: ${r.chars}</h6>
+            <h6>Current subscription period ends: ${r.end}</h6>
+            <h6>Subscription active: ${r.active}</h6>
+            `)
+        })
+    }
+
+    function refresh() {
+        let customer = localStorage.getItem('customer');
+        if (TEST) {
+            alert('refresh')
+            alert(customer)
+        }
+        if (customer) {
+
+            $('#login').hide()
+            $('#acct').show()
+            info()
+        } else {
+            $('#login').show()
+            $('#acct').hide()
+        }
+    }
+
+for (x of ['loginreg','cancel','pay','logout']) {
+
+    tmp="\""+x+"\""
+    eval(`document.getElementById(${tmp}).addEventListener("click", ()=>${x}(), false)`);
+}
 refresh()
