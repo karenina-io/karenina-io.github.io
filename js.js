@@ -227,4 +227,9 @@ function query(data, callback) {
     })
 }
 
+
+for (lang in SAMPLES) {
+    tmp="\""+lang+"\""
+    eval(`document.getElementById(${tmp}).addEventListener("click", ()=>fill(${tmp}), false)`);
+}
 refresh()

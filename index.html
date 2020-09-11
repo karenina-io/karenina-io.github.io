@@ -57,9 +57,5 @@ $(document).ready(function(e) {
     $('#footer').load('/footer.html');
 });
 
-for (lang in SAMPLES) {
 
-    tmp="\""+lang+"\""
-    eval(`document.getElementById(${tmp}).addEventListener("click", ()=>fill(${tmp}), false)`);
-}
 </script>
