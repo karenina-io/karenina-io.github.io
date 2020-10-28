@@ -44,9 +44,9 @@ const SAMPLES = {
     'fr': 'je aimer mange les vegetables',
     'ja': '私イタリアで住でいます。',
     'ko': '나는좋아한다사과를.',
-    'de': 'Du liebst ich.',
     'it': 'A me mi piace il gelato',
-    'pt': 'Porque ele ainda no chegou?'
+    'pt': 'Porque ele ainda no chegou?',
+    'de': 'Du liebst ich.'
 }
 
 function fill(lang) {
